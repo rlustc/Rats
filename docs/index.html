@@ -209,6 +209,83 @@
         margin-top: 20px;
       }
 
+      .table-stack {
+        display: grid;
+        gap: 28px;
+      }
+
+      .table-block h3 {
+        margin: 0 0 8px;
+        font-size: 1.08rem;
+        line-height: 1.3;
+      }
+
+      .table-note {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #fff;
+      }
+
+      table {
+        width: 100%;
+        min-width: 650px;
+        border-collapse: collapse;
+        font-size: 0.94rem;
+      }
+
+      th,
+      td {
+        padding: 9px 11px;
+        border-bottom: 1px solid var(--line);
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+
+      th {
+        background: #f3f3f3;
+        font-weight: 700;
+      }
+
+      tr.highlight td {
+        background: #f7f7f7;
+        font-weight: 700;
+      }
+
+      .gain {
+        color: #b51d1a;
+        font-weight: 700;
+      }
+
+      details {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #fff;
+      }
+
+      summary {
+        cursor: pointer;
+        padding: 13px 15px;
+        font-weight: 700;
+      }
+
+      details .table-wrap {
+        border: 0;
+        border-top: 1px solid var(--line);
+        border-radius: 0;
+      }
+
       .codeblock {
         overflow: auto;
         margin: 0;
@@ -346,8 +423,225 @@
         </figure>
       </section>
 
+      <section id="quantitative-results">
+        <h2>Quantitative Results</h2>
+        <div class="table-stack">
+          <div class="table-block">
+            <h3>Image Generation: Baseline vs. RATS</h3>
+            <p class="table-note">RATS improves FLUX1.0-dev across 3, 5, 8, and 50 NFEs.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>NFEs</th>
+                    <th>HPS ↑</th>
+                    <th>PickScore ↑</th>
+                    <th>ImageReward ↑</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Baseline</td><td>3</td><td>18.43</td><td>19.99</td><td>-0.3551</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>3</td><td>32.15 <span class="gain">+13.72</span></td><td>22.46 <span class="gain">+2.47</span></td><td>1.0956 <span class="gain">+1.4506</span></td></tr>
+                  <tr><td>Baseline</td><td>5</td><td>26.12</td><td>21.83</td><td>0.7443</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>5</td><td>32.16 <span class="gain">+6.04</span></td><td>22.68 <span class="gain">+0.85</span></td><td>1.1337 <span class="gain">+0.3894</span></td></tr>
+                  <tr><td>Baseline</td><td>8</td><td>28.43</td><td>22.42</td><td>0.9140</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>8</td><td>33.81 <span class="gain">+5.38</span></td><td>23.14 <span class="gain">+0.72</span></td><td>1.3240 <span class="gain">+0.4100</span></td></tr>
+                  <tr><td>Baseline</td><td>50</td><td>29.76</td><td>22.59</td><td>1.0037</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>50</td><td>32.95 <span class="gain">+3.19</span></td><td>22.79 <span class="gain">+0.20</span></td><td>1.1544 <span class="gain">+0.1507</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-block">
+            <h3>Image Generation: Comparison with Few-step Baselines</h3>
+            <p class="table-note">RATS achieves the best HPS and PickScore across all evaluated NFE settings.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>NFEs</th>
+                    <th>HPS ↑</th>
+                    <th>PickScore ↑</th>
+                    <th>ImageReward ↑</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Flux</td><td>3</td><td>18.43</td><td>19.99</td><td>-0.3551</td></tr>
+                  <tr><td>Hyper-SD</td><td>3</td><td>28.80</td><td>22.14</td><td>0.9882</td></tr>
+                  <tr><td>SenseFlow</td><td>3</td><td>30.63</td><td>22.33</td><td>1.2030</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>3</td><td>32.15</td><td>22.46</td><td>1.0956</td></tr>
+                  <tr><td>Flux</td><td>5</td><td>26.12</td><td>21.83</td><td>0.7443</td></tr>
+                  <tr><td>Hyper-SD</td><td>5</td><td>27.83</td><td>22.08</td><td>1.0710</td></tr>
+                  <tr><td>SenseFlow</td><td>5</td><td>30.99</td><td>22.53</td><td>1.2110</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>5</td><td>32.16</td><td>22.68</td><td>1.3337</td></tr>
+                  <tr><td>Flux</td><td>8</td><td>28.43</td><td>22.42</td><td>0.9140</td></tr>
+                  <tr><td>Hyper-SD</td><td>8</td><td>30.50</td><td>22.76</td><td>1.0410</td></tr>
+                  <tr><td>SenseFlow</td><td>8</td><td>30.99</td><td>22.59</td><td>1.1720</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>8</td><td>33.81</td><td>23.14</td><td>1.3240</td></tr>
+                  <tr><td>Flux</td><td>50</td><td>29.76</td><td>22.59</td><td>1.0037</td></tr>
+                  <tr><td>Hyper-SD</td><td>50</td><td>30.01</td><td>22.51</td><td>0.9461</td></tr>
+                  <tr><td>SenseFlow</td><td>50</td><td>30.69</td><td>22.31</td><td>1.0810</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>50</td><td>32.95</td><td>22.79</td><td>1.1544</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-block">
+            <h3>Video Generation: VBench Overall Scores</h3>
+            <p class="table-note">The largest improvements appear in the low-step video generation regime.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>NFEs</th>
+                    <th>Quality Score ↑</th>
+                    <th>Semantic Score ↑</th>
+                    <th>Total Score ↑</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Wan</td><td>50</td><td>83.08</td><td>62.93</td><td>79.05</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>50</td><td>83.99 <span class="gain">+0.91</span></td><td>65.99 <span class="gain">+3.06</span></td><td>80.40 <span class="gain">+1.35</span></td></tr>
+                  <tr><td>Wan</td><td>8</td><td>77.82</td><td>48.74</td><td>72.01</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>8</td><td>82.66 <span class="gain">+4.84</span></td><td>70.35 <span class="gain">+21.61</span></td><td>80.20 <span class="gain">+8.19</span></td></tr>
+                  <tr><td>Wan</td><td>5</td><td>73.64</td><td>34.10</td><td>65.73</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>5</td><td>81.23 <span class="gain">+7.59</span></td><td>67.78 <span class="gain">+33.68</span></td><td>78.53 <span class="gain">+12.80</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-block">
+            <h3>Efficiency Comparison</h3>
+            <p class="table-note">RATS combines few-step generation and preference alignment with substantially lower total training time.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Step Time (s)</th>
+                    <th>Peak Memory (GB)</th>
+                    <th>Per-Step Compute (TFLOPs)</th>
+                    <th>Total Steps (K)</th>
+                    <th>Total Time (h)</th>
+                    <th>Extra Data</th>
+                    <th>Few-Step</th>
+                    <th>Preference Align</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>SenseFlow</td><td>7.31</td><td>78.87</td><td>801.28</td><td>12.0</td><td>24.35</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+                  <tr><td>DanceGRPO</td><td>212.71</td><td>34.05</td><td>1605.00</td><td>0.2</td><td>11.78</td><td>No</td><td>No</td><td>Yes</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>7.57</td><td>67.67</td><td>1229.60</td><td>0.4</td><td>0.83</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-block">
+            <h3>Ablation Study</h3>
+            <p class="table-note">Reward-aware trajectory shaping outperforms reward-only and distillation-only variants.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>NFEs</th>
+                    <th>Method</th>
+                    <th>HPS ↑</th>
+                    <th>PickScore ↑</th>
+                    <th>ImageReward ↑</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>3</td><td>Reward-Only</td><td>20.33</td><td>20.26</td><td>0.1353</td></tr>
+                  <tr><td>3</td><td>Distillation-Only</td><td>24.34</td><td>20.61</td><td>0.4523</td></tr>
+                  <tr><td>3</td><td>Reward+Distillation</td><td>26.72</td><td>21.35</td><td>0.9981</td></tr>
+                  <tr class="highlight"><td>3</td><td>Ours</td><td>32.15</td><td>22.46</td><td>1.0956</td></tr>
+                  <tr><td>5</td><td>Reward-Only</td><td>26.88</td><td>22.01</td><td>0.8912</td></tr>
+                  <tr><td>5</td><td>Distillation-Only</td><td>27.01</td><td>22.38</td><td>0.8013</td></tr>
+                  <tr><td>5</td><td>Reward+Distillation</td><td>29.97</td><td>22.35</td><td>1.0718</td></tr>
+                  <tr class="highlight"><td>5</td><td>Ours</td><td>32.16</td><td>22.68</td><td>1.1337</td></tr>
+                  <tr><td>8</td><td>Reward-Only</td><td>29.86</td><td>22.77</td><td>0.9560</td></tr>
+                  <tr><td>8</td><td>Distillation-Only</td><td>30.10</td><td>22.04</td><td>0.9230</td></tr>
+                  <tr><td>8</td><td>Reward+Distillation</td><td>33.18</td><td>22.82</td><td>1.1568</td></tr>
+                  <tr class="highlight"><td>8</td><td>RATS</td><td>33.81</td><td>23.14</td><td>1.3240</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <details>
+            <summary>Alpha sensitivity results</summary>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>NFEs</th>
+                    <th>Alpha</th>
+                    <th>HPS ↑</th>
+                    <th>PickScore ↑</th>
+                    <th>ImageReward ↑</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>3</td><td>0.2</td><td>32.33</td><td>22.08</td><td>1.0082</td></tr>
+                  <tr><td>3</td><td>0.5</td><td>32.08</td><td>22.47</td><td>1.1052</td></tr>
+                  <tr><td>3</td><td>1</td><td>31.88</td><td>22.06</td><td>1.0826</td></tr>
+                  <tr class="highlight"><td>3</td><td>2</td><td>32.15</td><td>22.46</td><td>1.0956</td></tr>
+                  <tr><td>5</td><td>0.2</td><td>31.78</td><td>22.09</td><td>1.1615</td></tr>
+                  <tr><td>5</td><td>0.5</td><td>32.09</td><td>22.51</td><td>1.2058</td></tr>
+                  <tr class="highlight"><td>5</td><td>1</td><td>32.16</td><td>22.68</td><td>1.3337</td></tr>
+                  <tr><td>5</td><td>2</td><td>31.87</td><td>22.36</td><td>1.0891</td></tr>
+                  <tr><td>8</td><td>0.2</td><td>33.07</td><td>22.56</td><td>1.1730</td></tr>
+                  <tr><td>8</td><td>0.5</td><td>32.24</td><td>22.67</td><td>1.1829</td></tr>
+                  <tr class="highlight"><td>8</td><td>1</td><td>33.81</td><td>23.14</td><td>1.3240</td></tr>
+                  <tr><td>8</td><td>2</td><td>32.13</td><td>22.97</td><td>1.1622</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details>
+            <summary>Detailed VBench results</summary>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>NFEs</th>
+                    <th>AQ ↑</th>
+                    <th>Color ↑</th>
+                    <th>HA ↑</th>
+                    <th>IQ ↑</th>
+                    <th>MO ↑</th>
+                    <th>OC ↑</th>
+                    <th>OCons ↑</th>
+                    <th>Scene ↑</th>
+                    <th>SR ↑</th>
+                    <th>SC ↑</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Wan</td><td>5</td><td>41.42</td><td>61.65</td><td>34.00</td><td>39.30</td><td>7.85</td><td>21.75</td><td>13.32</td><td>5.45</td><td>22.57</td><td>90.75</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>5</td><td>71.81</td><td>90.26</td><td>67.00</td><td>72.70</td><td>67.75</td><td>75.47</td><td>22.15</td><td>26.16</td><td>83.50</td><td>98.07</td></tr>
+                  <tr><td>Wan</td><td>8</td><td>50.31</td><td>81.47</td><td>61.00</td><td>51.15</td><td>23.01</td><td>41.45</td><td>17.15</td><td>7.84</td><td>47.16</td><td>91.73</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>8</td><td>74.78</td><td>87.83</td><td>72.00</td><td>75.40</td><td>73.90</td><td>84.57</td><td>23.25</td><td>24.37</td><td>84.97</td><td>98.32</td></tr>
+                  <tr><td>Wan</td><td>50</td><td>58.66</td><td>84.59</td><td>72.00</td><td>66.02</td><td>54.87</td><td>68.51</td><td>22.85</td><td>17.65</td><td>67.13</td><td>93.90</td></tr>
+                  <tr class="highlight"><td>Ours</td><td>50</td><td>66.89</td><td>74.52</td><td>75.00</td><td>76.32</td><td>70.35</td><td>78.56</td><td>23.85</td><td>22.02</td><td>67.40</td><td>96.27</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
       <section id="results">
-        <h2>Results</h2>
+        <h2>Qualitative Results</h2>
         <p class="abstract">
           Experiments show that RATS consistently improves the efficiency-quality frontier, narrowing the gap between
           few-step students and stronger multi-step generators for both image and video generation.
