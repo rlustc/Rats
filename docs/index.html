@@ -413,16 +413,6 @@
         </figure>
       </section>
 
-      <section id="analysis">
-        <h2>Reward Dynamics</h2>
-        <figure class="figure">
-          <img src="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked_page-0001.jpg" alt="Reward dynamics and teacher-student gap under few-step budgets">
-          <figcaption>
-            Reward dynamics and teacher-student gap analysis under different few-step sampling budgets.
-          </figcaption>
-        </figure>
-      </section>
-
       <section id="quantitative-results">
         <h2>Quantitative Results</h2>
         <div class="table-stack">
@@ -543,100 +533,6 @@
             </div>
           </div>
 
-          <div class="table-block">
-            <h3>Ablation Study</h3>
-            <p class="table-note">Reward-aware trajectory shaping outperforms reward-only and distillation-only variants.</p>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>NFEs</th>
-                    <th>Method</th>
-                    <th>HPS ↑</th>
-                    <th>PickScore ↑</th>
-                    <th>ImageReward ↑</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>3</td><td>Reward-Only</td><td>20.33</td><td>20.26</td><td>0.1353</td></tr>
-                  <tr><td>3</td><td>Distillation-Only</td><td>24.34</td><td>20.61</td><td>0.4523</td></tr>
-                  <tr><td>3</td><td>Reward+Distillation</td><td>26.72</td><td>21.35</td><td>0.9981</td></tr>
-                  <tr class="highlight"><td>3</td><td>Ours</td><td>32.15</td><td>22.46</td><td>1.0956</td></tr>
-                  <tr><td>5</td><td>Reward-Only</td><td>26.88</td><td>22.01</td><td>0.8912</td></tr>
-                  <tr><td>5</td><td>Distillation-Only</td><td>27.01</td><td>22.38</td><td>0.8013</td></tr>
-                  <tr><td>5</td><td>Reward+Distillation</td><td>29.97</td><td>22.35</td><td>1.0718</td></tr>
-                  <tr class="highlight"><td>5</td><td>Ours</td><td>32.16</td><td>22.68</td><td>1.1337</td></tr>
-                  <tr><td>8</td><td>Reward-Only</td><td>29.86</td><td>22.77</td><td>0.9560</td></tr>
-                  <tr><td>8</td><td>Distillation-Only</td><td>30.10</td><td>22.04</td><td>0.9230</td></tr>
-                  <tr><td>8</td><td>Reward+Distillation</td><td>33.18</td><td>22.82</td><td>1.1568</td></tr>
-                  <tr class="highlight"><td>8</td><td>RATS</td><td>33.81</td><td>23.14</td><td>1.3240</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <details>
-            <summary>Alpha sensitivity results</summary>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>NFEs</th>
-                    <th>Alpha</th>
-                    <th>HPS ↑</th>
-                    <th>PickScore ↑</th>
-                    <th>ImageReward ↑</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>3</td><td>0.2</td><td>32.33</td><td>22.08</td><td>1.0082</td></tr>
-                  <tr><td>3</td><td>0.5</td><td>32.08</td><td>22.47</td><td>1.1052</td></tr>
-                  <tr><td>3</td><td>1</td><td>31.88</td><td>22.06</td><td>1.0826</td></tr>
-                  <tr class="highlight"><td>3</td><td>2</td><td>32.15</td><td>22.46</td><td>1.0956</td></tr>
-                  <tr><td>5</td><td>0.2</td><td>31.78</td><td>22.09</td><td>1.1615</td></tr>
-                  <tr><td>5</td><td>0.5</td><td>32.09</td><td>22.51</td><td>1.2058</td></tr>
-                  <tr class="highlight"><td>5</td><td>1</td><td>32.16</td><td>22.68</td><td>1.3337</td></tr>
-                  <tr><td>5</td><td>2</td><td>31.87</td><td>22.36</td><td>1.0891</td></tr>
-                  <tr><td>8</td><td>0.2</td><td>33.07</td><td>22.56</td><td>1.1730</td></tr>
-                  <tr><td>8</td><td>0.5</td><td>32.24</td><td>22.67</td><td>1.1829</td></tr>
-                  <tr class="highlight"><td>8</td><td>1</td><td>33.81</td><td>23.14</td><td>1.3240</td></tr>
-                  <tr><td>8</td><td>2</td><td>32.13</td><td>22.97</td><td>1.1622</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary>Detailed VBench results</summary>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Method</th>
-                    <th>NFEs</th>
-                    <th>AQ ↑</th>
-                    <th>Color ↑</th>
-                    <th>HA ↑</th>
-                    <th>IQ ↑</th>
-                    <th>MO ↑</th>
-                    <th>OC ↑</th>
-                    <th>OCons ↑</th>
-                    <th>Scene ↑</th>
-                    <th>SR ↑</th>
-                    <th>SC ↑</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Wan</td><td>5</td><td>41.42</td><td>61.65</td><td>34.00</td><td>39.30</td><td>7.85</td><td>21.75</td><td>13.32</td><td>5.45</td><td>22.57</td><td>90.75</td></tr>
-                  <tr class="highlight"><td>Ours</td><td>5</td><td>71.81</td><td>90.26</td><td>67.00</td><td>72.70</td><td>67.75</td><td>75.47</td><td>22.15</td><td>26.16</td><td>83.50</td><td>98.07</td></tr>
-                  <tr><td>Wan</td><td>8</td><td>50.31</td><td>81.47</td><td>61.00</td><td>51.15</td><td>23.01</td><td>41.45</td><td>17.15</td><td>7.84</td><td>47.16</td><td>91.73</td></tr>
-                  <tr class="highlight"><td>Ours</td><td>8</td><td>74.78</td><td>87.83</td><td>72.00</td><td>75.40</td><td>73.90</td><td>84.57</td><td>23.25</td><td>24.37</td><td>84.97</td><td>98.32</td></tr>
-                  <tr><td>Wan</td><td>50</td><td>58.66</td><td>84.59</td><td>72.00</td><td>66.02</td><td>54.87</td><td>68.51</td><td>22.85</td><td>17.65</td><td>67.13</td><td>93.90</td></tr>
-                  <tr class="highlight"><td>Ours</td><td>50</td><td>66.89</td><td>74.52</td><td>75.00</td><td>76.32</td><td>70.35</td><td>78.56</td><td>23.85</td><td>22.02</td><td>67.40</td><td>96.27</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
         </div>
       </section>
 
@@ -656,6 +552,16 @@
             <figcaption>WAN case study from the main paper.</figcaption>
           </figure>
         </div>
+      </section>
+
+      <section id="analysis">
+        <h2>Reward Dynamics</h2>
+        <figure class="figure">
+          <img src="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked_page-0001.jpg" alt="Reward dynamics and teacher-student gap under few-step budgets">
+          <figcaption>
+            Reward dynamics and teacher-student gap analysis under different few-step sampling budgets.
+          </figcaption>
+        </figure>
       </section>
 
       <section id="citation">
