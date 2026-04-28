@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Reward-Aware Trajectory Shaping for Few-step Visual Generation">
+    <title>RATS | Reward-Aware Trajectory Shaping</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #15202b;
+        --muted: #5d6b7a;
+        --line: #d8dee7;
+        --paper: #ffffff;
+        --wash: #f5f7fa;
+        --accent: #0f766e;
+        --accent-dark: #124e49;
+        --gold: #a8660d;
+        --blue: #2457a7;
+        --shadow: 0 18px 48px rgba(21, 32, 43, 0.12);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid rgba(216, 222, 231, 0.9);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav {
+        width: min(1120px, calc(100% - 40px));
+        min-height: 58px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font-weight: 800;
+        text-decoration: none;
+        letter-spacing: 0;
+        white-space: nowrap;
+      }
+
+      .brand span {
+        color: var(--accent);
+      }
+
+      .links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .links a,
+      .button {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 0.92rem;
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .links a:hover {
+        border-color: var(--line);
+        background: var(--wash);
+      }
+
+      .hero {
+        border-bottom: 1px solid var(--line);
+        background:
+          linear-gradient(115deg, rgba(15, 118, 110, 0.12), rgba(36, 87, 167, 0.08) 48%, rgba(168, 102, 13, 0.1)),
+          #fbfcfd;
+      }
+
+      .hero-inner {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        min-height: 620px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
+        gap: 48px;
+        align-items: center;
+        padding: 76px 0 44px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 18px;
+        color: var(--accent-dark);
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 30px;
+        height: 2px;
+        background: var(--accent);
+      }
+
+      h1 {
+        max-width: 930px;
+        margin: 0;
+        font-size: clamp(2.7rem, 7vw, 5.35rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        margin: 24px 0 0;
+        max-width: 760px;
+        color: #344454;
+        font-size: clamp(1.04rem, 2vw, 1.28rem);
+      }
+
+      .authors {
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .button {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .button.secondary {
+        border-color: var(--line);
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--ink);
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .hero-visual {
+        min-width: 0;
+      }
+
+      .figure-frame {
+        overflow: hidden;
+        border: 1px solid rgba(216, 222, 231, 0.92);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .figure-frame object {
+        width: 100%;
+        height: min(56vw, 430px);
+        min-height: 300px;
+        display: block;
+        border: 0;
+      }
+
+      .caption {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      main section {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-inner {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 70px 0;
+      }
+
+      h2 {
+        margin: 0 0 18px;
+        font-size: clamp(1.65rem, 3vw, 2.45rem);
+        line-height: 1.12;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 920px;
+        margin: 0;
+        color: #344454;
+        font-size: 1.08rem;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+        gap: 44px;
+        align-items: start;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 24px;
+      }
+
+      .pill {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 11px;
+        background: #fff;
+        color: #344454;
+        font-size: 0.88rem;
+        font-weight: 650;
+      }
+
+      .points {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 32px;
+      }
+
+      .point {
+        min-height: 190px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 22px;
+        background: #fff;
+      }
+
+      .point strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--accent-dark);
+        font-size: 1.02rem;
+      }
+
+      .point p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .visual-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 30px;
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+
+      .mini-figure {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .mini-figure object {
+        width: 100%;
+        height: 340px;
+        display: block;
+        border: 0;
+      }
+
+      .mini-figure.wide object {
+        height: 420px;
+      }
+
+      .mini-figure figcaption {
+        border-top: 1px solid var(--line);
+        padding: 10px 12px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .codeblock {
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 24px 0 0;
+        padding: 18px;
+        background: #111827;
+        color: #f8fafc;
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      .footer {
+        background: #101820;
+        color: #d7dee8;
+      }
+
+      .footer .section-inner {
+        padding: 34px 0;
+      }
+
+      .footer p {
+        margin: 0;
+        color: #aeb9c6;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 900px) {
+        .nav {
+          min-height: auto;
+          padding: 12px 0;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .links {
+          justify-content: flex-start;
+        }
+
+        .hero-inner,
+        .split,
+        .points,
+        .visual-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-inner {
+          min-height: auto;
+          padding-top: 48px;
+          gap: 34px;
+        }
+
+        .section-inner {
+          padding: 54px 0;
+        }
+
+        .mini-figure object,
+        .mini-figure.wide object,
+        .figure-frame object {
+          height: 320px;
+          min-height: 260px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .nav,
+        .hero-inner,
+        .section-inner {
+          width: min(100% - 28px, 1120px);
+        }
+
+        .links a,
+        .button {
+          width: 100%;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        .point {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top"><span>RATS</span> Few-step Visual Generation</a>
+        <div class="links">
+          <a href="#abstract">Abstract</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#citation">Citation</a>
+          <a href="https://github.com/rlustc/Rats">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">Open-source paper homepage</p>
+          <h1>Reward-Aware Trajectory Shaping for Few-step Visual Generation</h1>
+          <p class="subtitle">
+            RATS aligns few-step visual generators with preference rewards by shaping intermediate denoising trajectories,
+            using teacher guidance only when it improves reward-aware training.
+          </p>
+          <p class="authors">
+            Rui Li*, Bingyu Li*, Yuanzhi Liang, Haibin Huang, Chi Zhang, XueLong Li
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="https://github.com/rlustc/Rats">Code</a>
+            <a class="button secondary" href="https://arxiv.org/abs/2604.14910">Paper</a>
+            <a class="button secondary" href="#citation">BibTeX</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="figure-frame">
+            <object data="assets/pic_intro.pdf" type="application/pdf" aria-label="RATS framework comparison">
+              <a href="assets/pic_intro.pdf">View framework figure</a>
+            </object>
+          </div>
+          <p class="caption">Comparison with teacher imitation and terminal reward optimization paradigms.</p>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section id="abstract">
+        <div class="section-inner split">
+          <div>
+            <h2>Abstract</h2>
+            <div class="pill-row" aria-label="Keywords">
+              <span class="pill">Few-step generation</span>
+              <span class="pill">Preference alignment</span>
+              <span class="pill">Trajectory distillation</span>
+              <span class="pill">Reward gating</span>
+            </div>
+          </div>
+          <p class="lead">
+            Achieving high-fidelity generation in extremely few sampling steps has long been a central goal of generative
+            modeling. Existing distillation methods compress multi-step denoising into a few-step generator, but often
+            constrain the student to imitate a stronger teacher. RATS introduces preference alignment awareness through
+            horizon-matched teacher-student latent trajectories and a reward-aware gate that adaptively regulates teacher
+            guidance based on relative reward performance. The teacher is used only during training, preserving the
+            deployment efficiency of the few-step student.
+          </p>
+        </div>
+      </section>
+
+      <section id="method">
+        <div class="section-inner">
+          <h2>Method Overview</h2>
+          <p class="lead">
+            RATS treats few-step alignment as trajectory-level reward allocation rather than only output-level reward
+            optimization. The framework combines multi-stage latent alignment, sigma-based horizon matching, and
+            reward-gated teacher guidance.
+          </p>
+          <div class="points">
+            <article class="point">
+              <strong>Horizon matching</strong>
+              <p>Aligns teacher and student latent trajectories at key denoising stages, transferring intermediate priors from a stronger multi-step generator.</p>
+            </article>
+            <article class="point">
+              <strong>Reward-aware gate</strong>
+              <p>Strengthens trajectory shaping when the teacher receives higher rewards, and relaxes the teacher constraint when the student catches up or surpasses it.</p>
+            </article>
+            <article class="point">
+              <strong>No test-time overhead</strong>
+              <p>Uses the EMA teacher only during training; inference keeps the original few-step student speed and deployment footprint.</p>
+            </article>
+          </div>
+          <div class="visual-grid">
+            <figure class="mini-figure wide">
+              <object data="assets/teacher_student.pdf" type="application/pdf" aria-label="Teacher student reward shaping diagram">
+                <a href="assets/teacher_student.pdf">View teacher-student diagram</a>
+              </object>
+              <figcaption>Teacher-student trajectory shaping with reward-aware guidance.</figcaption>
+            </figure>
+            <figure class="mini-figure wide">
+              <object data="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked.pdf" type="application/pdf" aria-label="Reward and gap analysis">
+                <a href="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked.pdf">View reward and gap analysis</a>
+              </object>
+              <figcaption>Reward dynamics and teacher-student gap under different step budgets.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="section-inner">
+          <h2>Visual Results</h2>
+          <p class="lead">
+            Experiments show that RATS improves the efficiency-quality trade-off for few-step visual generation,
+            narrowing the gap between few-step students and stronger multi-step generators.
+          </p>
+          <div class="visual-grid">
+            <figure class="mini-figure">
+              <object data="assets/flux_case.pdf" type="application/pdf" aria-label="FLUX visual results">
+                <a href="assets/flux_case.pdf">View FLUX results</a>
+              </object>
+              <figcaption>Representative image generation results.</figcaption>
+            </figure>
+            <figure class="mini-figure">
+              <object data="assets/wan_case.pdf" type="application/pdf" aria-label="WAN visual results">
+                <a href="assets/wan_case.pdf">View WAN results</a>
+              </object>
+              <figcaption>Representative video generation results.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="citation">
+        <div class="section-inner">
+          <h2>Citation</h2>
+          <p class="lead">Use this placeholder until the final conference or arXiv BibTeX is ready.</p>
+          <pre class="codeblock"><code>@article{li2026rats,
+  title   = {Reward-Aware Trajectory Shaping for Few-step Visual Generation},
+  author  = {Li, Rui and Li, Bingyu and Liang, Yuanzhi and Huang, Haibin and Zhang, Chi and Li, XueLong},
+  journal = {arXiv preprint arXiv:2604.14910},
+  year    = {2026}
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="section-inner">
+        <p>* Equal contribution. This homepage is maintained as part of the open-source RATS project.</p>
+      </div>
+    </footer>
+  </body>
+</html>
