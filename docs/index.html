@@ -125,21 +125,17 @@
         margin: 0 auto;
       }
 
-      .figure object {
+      .figure img {
         width: 100%;
-        height: 520px;
+        height: auto;
         display: block;
         border: 1px solid var(--line);
         border-radius: 4px;
         background: #fff;
       }
 
-      .figure.compact object {
-        height: 400px;
-      }
-
-      .figure.small object {
-        height: 340px;
+      .figure.no-border img {
+        border: 0;
       }
 
       figcaption {
@@ -240,12 +236,6 @@
           grid-template-columns: 1fr;
         }
 
-        .figure object,
-        .figure.compact object,
-        .figure.small object {
-          height: 330px;
-        }
-
         .button {
           min-width: 94px;
         }
@@ -264,11 +254,6 @@
           flex: 1 1 calc(50% - 8px);
         }
 
-        .figure object,
-        .figure.compact object,
-        .figure.small object {
-          height: 280px;
-        }
       }
     </style>
   </head>
@@ -296,10 +281,8 @@
       </header>
 
       <div class="teaser">
-        <figure class="figure">
-          <object data="assets/pic_intro.pdf" type="application/pdf" aria-label="RATS overview teaser">
-            <a href="assets/pic_intro.pdf">View the RATS overview figure</a>
-          </object>
+        <figure class="figure no-border">
+          <img src="assets/pic-1_cropped_page-0001.jpg" alt="RATS method overview with reward-aware teacher-student trajectory shaping">
           <figcaption>
             RATS introduces reward-aware trajectory shaping for few-step visual generation, transferring intermediate
             teacher knowledge only when it remains beneficial under the reward objective.
@@ -342,10 +325,8 @@
             <p>Uses the multi-step EMA teacher only during training, adding no computational overhead at test time.</p>
           </article>
         </div>
-        <figure class="figure compact">
-          <object data="assets/teacher_student.pdf" type="application/pdf" aria-label="Teacher-student trajectory shaping">
-            <a href="assets/teacher_student.pdf">View teacher-student trajectory shaping figure</a>
-          </object>
+        <figure class="figure no-border">
+          <img src="assets/pic-1_cropped_page-0001.jpg" alt="Reward-aware teacher-student trajectory shaping framework">
           <figcaption>
             Overview of reward-aware teacher-student trajectory shaping in RATS.
           </figcaption>
@@ -354,10 +335,8 @@
 
       <section id="analysis">
         <h2>Reward Dynamics</h2>
-        <figure class="figure compact">
-          <object data="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked.pdf" type="application/pdf" aria-label="Reward dynamics and teacher-student gap">
-            <a href="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked.pdf">View reward dynamics figure</a>
-          </object>
+        <figure class="figure">
+          <img src="assets/student_teacher_reward_and_gap_3_5_8step_horizontal_marked_page-0001.jpg" alt="Reward dynamics and teacher-student gap under few-step budgets">
           <figcaption>
             Reward dynamics and teacher-student gap analysis under different few-step sampling budgets.
           </figcaption>
@@ -371,17 +350,13 @@
           few-step students and stronger multi-step generators for both image and video generation.
         </p>
         <div class="results-grid">
-          <figure class="figure small">
-            <object data="assets/flux_case.pdf" type="application/pdf" aria-label="Image generation results">
-              <a href="assets/flux_case.pdf">View image generation results</a>
-            </object>
-            <figcaption>Representative image generation results.</figcaption>
+          <figure class="figure">
+            <img src="assets/sul_flux_5NFE_page-0001.jpg" alt="Representative image generation results with FLUX-based models">
+            <figcaption>Representative image generation results under few-step sampling.</figcaption>
           </figure>
-          <figure class="figure small">
-            <object data="assets/wan_case.pdf" type="application/pdf" aria-label="Video generation results">
-              <a href="assets/wan_case.pdf">View video generation results</a>
-            </object>
-            <figcaption>Representative video generation results.</figcaption>
+          <figure class="figure">
+            <img src="assets/wan_case_page-0001.jpg" alt="Representative video generation results with WAN-based models">
+            <figcaption>Representative video generation results under few-step sampling.</figcaption>
           </figure>
         </div>
       </section>
