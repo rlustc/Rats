@@ -200,8 +200,8 @@
 
       .results-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 28px;
         margin-top: 20px;
       }
 
@@ -231,8 +231,7 @@
           padding-top: 34px;
         }
 
-        .method-grid,
-        .results-grid {
+        .method-grid {
           grid-template-columns: 1fr;
         }
 
@@ -282,7 +281,7 @@
 
       <div class="teaser">
         <figure class="figure no-border">
-          <img src="assets/pic-1_cropped_page-0001.jpg" alt="RATS method overview with reward-aware teacher-student trajectory shaping">
+          <img src="assets/pic_intro_page-0001.jpg" alt="Comparison of RATS with teacher imitation and terminal reward optimization">
           <figcaption>
             RATS introduces reward-aware trajectory shaping for few-step visual generation, transferring intermediate
             teacher knowledge only when it remains beneficial under the reward objective.
@@ -352,11 +351,19 @@
         <div class="results-grid">
           <figure class="figure">
             <img src="assets/sul_flux_5NFE_page-0001.jpg" alt="Representative image generation results with FLUX-based models">
-            <figcaption>Representative image generation results under few-step sampling.</figcaption>
+            <figcaption>Supplementary FLUX image generation results under 5-step sampling.</figcaption>
           </figure>
           <figure class="figure">
-            <img src="assets/wan_case_page-0001.jpg" alt="Representative video generation results with WAN-based models">
-            <figcaption>Representative video generation results under few-step sampling.</figcaption>
+            <img src="assets/sul_flux_8NFE_page-0001.jpg" alt="Representative image generation results with FLUX-based models under 8-step sampling">
+            <figcaption>Supplementary FLUX image generation results under 8-step sampling.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/sul_wan_5step_thin_page-0001.jpg" alt="Supplementary video generation results with WAN-based models under 5-step sampling">
+            <figcaption>Supplementary WAN video generation results under 5-step sampling.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/sul_wan_8step_thin_page-0001.jpg" alt="Supplementary video generation results with WAN-based models">
+            <figcaption>Supplementary WAN video generation results under 8-step sampling.</figcaption>
           </figure>
         </div>
       </section>
